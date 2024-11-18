@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+<h1>Edit Book</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Edit</button>
+</form>
+<a href="{% url 'katalog:book-detail' book.id %}">Cancel</a>
+<div class="col-md-3 mb-4">
+</div>
+{% endblock content %}
+
+
+
+

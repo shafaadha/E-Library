@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Book Catalog</h2>
+
+    <form method="GET" class="mb-3">
+        <div class="row">
+            <div class="col-md-2">
+                <select name="genre" class="form-select">
+                    <option value="">Select Genre</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre|lower }}">{{ genre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="favorite" class="form-select">
+                    <option value="">Select Favorite</option>
+                    <option value="true">Favorite</option>
+                    <option value="false">Not Favorite</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">{{ book.description|truncatewords:20 }}</p>
+                    <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                    <p class="card-text"><strong>Year:</strong> {{ book.year }}</p>
+                    <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+                    <div class="d-flex">
+                        <a href="{% url 'katalog:book-detail' book.id %}" class="btn btn-primary mx-2">Detail</a>
+                        <form method="POST" action="{% url 'katalog:toggle-favorite' book.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" name="toggle_favorite" class="btn {% if book.is_favorite %}btn-success{% else %}btn-secondary{% endif %} mx-2">
+                                {% if book.is_favorite %}Remove Favorite{% else %}Favorite{% endif %}
+                            </button>
+                        </form>
+                        <form action="{% url 'katalog:analyze_book' book.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary mx-2">Analisis</button>
+                        </form>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+

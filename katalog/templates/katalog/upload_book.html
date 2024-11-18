@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+
+{% block content %}
+  <h1>Upload Buku</h1>
+  <form method="post" enctype="multipart/form-data" class="container">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div class="text-danger">
+          {% for error in form.title.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="mb-3">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+      {% if form.description.errors %}
+        <div class="text-danger">
+          {% for error in form.description.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.author.label_tag }}
+      {{ form.author }}
+      {% if form.author.errors %}
+        <div class="text-danger">
+          {% for error in form.author.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.year.label_tag }}
+      {{ form.year }}
+      {% if form.year.errors %}
+        <div class="text-danger">
+          {% for error in form.year.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.genre.label_tag }}
+      {{ form.genre }}
+      {% if form.genre.errors %}
+        <div class="text-danger">
+          {% for error in form.genre.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.pdf_file.label_tag }}
+      {{ form.pdf_file }}
+      {% if form.pdf_file.errors %}
+        <div class="text-danger">
+          {% for error in form.pdf_file.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+{% endblock %}

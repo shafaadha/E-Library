@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h2>Analisis Keyword Buku: {{ book.title }}</h2>
+        <ul>
+            {% for word, _ in common_words %}
+                <li>{{ word }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'katalog:book-detail' book.id %}" class="btn btn-primary">Detail</a>
+        <a href="{% url 'katalog:book-list' %}" class="btn btn-primary">Kembali</a>
+    </div>
+{% endblock content %}

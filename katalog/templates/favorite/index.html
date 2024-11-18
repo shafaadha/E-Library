@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Favorite Books</h1>
+    {% if books %}
+        <div class="row">
+            {% for book in books %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                            <p class="card-text"><strong>Year:</strong> {{ book.year }}</p>
+                            <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+                            <a href="{% url 'katalog:book-detail' book.id %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No favorite books</p>
+    {% endif %}
+</div>
+{% endblock content %}

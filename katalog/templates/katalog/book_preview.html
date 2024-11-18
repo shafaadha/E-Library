@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }} - Preview</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar { 
+            margin-bottom: 20px; 
+        }
+        .pagination { 
+            display: flex; gap: 10px;
+        }
+        .book-image-container img { 
+            max-width: 100%; 
+            height: auto; 
+            display: block; 
+            margin: 20px auto; }
+        .btn:disabled { 
+            background-color: grey; 
+            cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-dark">
+        <a href="{% url 'katalog:book-list' %}" class="btn btn-secondary">&lt; Back</a>
+        <h1 class="mx-auto" style="color: white;">{{ book.title }}</h1>
+    </nav>
+    
+
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{% url 'katalog:book-preview' book.id %}?page={{ page_num|add:-1 }}" class="btn btn-primary" 
+           {% if previous_disabled %}disabled{% endif %}>Previous</a>
+        
+        <a href="{% url 'katalog:book-preview' book.id %}?page={{ page_num|add:1 }}" class="btn btn-primary" 
+           {% if next_disabled %}disabled{% endif %}>Next</a>
+    </div>
+    <div class="book-image-container">
+        <img src="{{ image }}" alt="Page {{ page_num }}" />
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

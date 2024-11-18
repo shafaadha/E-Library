@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Detail {{ book.title }}</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h5 class="font-weight-bold">{{ book.title }}</h5>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Year:</strong> {{ book.year }}</p>
+            <p><strong>Genre:</strong> {{ book.genre }}</p>
+            <p><strong>Description:</strong> {{ book.description }}</p>
+            
+            <form method="POST" action="{% url 'katalog:toggle-favorite' book.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" name="toggle_favorite" class="btn {% if book.is_favorite %}btn-success{% else %}btn-secondary{% endif %}">
+                    {% if book.is_favorite %}Remove from Favorite{% else %}Add to Favorite{% endif %}
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'katalog:delete-book' book.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</button>
+            </form>
+
+            <form method="POST" action="{% url 'katalog:book-edit' book.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" name="edit" class="btn btn-warning">Edit</button>
+            </form>
+
+            <a href="{% url 'katalog:book-preview' book.id %}" class="btn btn-light">Preview</a>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            {% if cover_image %}
+                <img src="{{ cover_image }}" alt="{{ book.title }} cover" class="img-fluid" style="object-fit: cover; height: 100%; width: 100%;">
+            {% else %}
+                <p>No cover image available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
